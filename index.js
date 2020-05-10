@@ -166,6 +166,7 @@ fetch('https://api.openweathermap.org/data/2.5/weather?id=3118848&APPID=999f7d10
 	document.querySelector('.in_temp').innerHTML = `${formatNum(urlParams.get('temp'), 'º', 'bigger', 'big')} `
 	document.querySelector('.in_humidity').innerHTML = `${formatNum(urlParams.get('hum'), ' ')}<i class="fas fa-humidity"></i>`
 	document.querySelector('.battery').innerHTML = `${formatNum(urlParams.get('bat')*100, ' ')}<i class="${getBatteryIcon(urlParams.get('usb'), getBatteryPercent(urlParams.get('bat'), 2.5, 5))}"></i>`
+	document.querySelector('.container').innerHTML = `${document.querySelector('.container').innerHTML}<div class="rendered"></div>`
 
 //	const list = [602, 602]
 
