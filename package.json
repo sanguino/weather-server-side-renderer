@@ -1,0 +1,16 @@
+{
+  "name": "weather-server-side-renderer",
+  "version": "1.0.0",
+  "description": "Server side renderer for eink remote screen",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1",
+    "get-pixels": "^3.3.2",
+    "puppeteer": "^3.0.4"
+  }
+}
