@@ -1,101 +1,28 @@
 const icons = [
-	{ 
-		regex: /^2\d2$/,
-		value: 'thunderstorm'
-	},
-	{
-		regex: /^2\d\d$/,
-		value: day => day ? 'thunderstorm-sun' : 'thunderstorm-moon'
-	},
-
- 	{
- 		regex: /^3\d\d$/,
- 		value: 'cloud-drizzle'
- 	},
-	{
-		regex: /^50[012]$/,
-		value: day => day ? 'cloud-sun-rain' : 'cloud-moon-rain'
-	},
-	{
-		regex: /^511$/,
-		value: 'cloud-hail'
-	},
-	{
-		regex: /^522|50[34]|531$/,
-		value: 'cloud-showers-heavy'
-	},
-	{
-		regex: /^5\d\d$/,
-		value: 'cloud-showers'
-	},
-	{
-		regex: /^600$/,
-		value: 'snowflake'
-	},
-	{
-		regex: /^61[12]$/,
-		value: 'cloud-hail'
-	},
-	{
-		regex: /^613$/,
-		value: 'cloud-hail-mixed'
-	},
-	{
-		regex: /^61\d$/,
-		value: 'cloud-sleet'
-	},
-	{
-		regex: /^62\d$/,
-		value: 'cloud-snow'
-	},
-	{
-		regex: /^6\d\d$/,
-		value: 'snowflakes'
-	},
-	{
-		regex: /^711$/,
-		value: 'smoke'
-	},
-	{
-		regex: /^721$/,
-		value: 'smog'
-	},
-	{
-		regex: /^731$/,
-		value: 'smog'
-	},
-	{
-		regex: /^762$/,
-		value: 'volcano'
-	},
-	{
-		regex: /^781$/,
-		value: 'tornado'
-	},
-	{
-		regex: /^7\d\d$/,
-		value: 'fog'
-	},
-	{
-		regex: /^800$/,
-		value: day => day ? 'sun' : (Math.random() > 0.3 ? 'moon' : (Math.random() > 0.5 ? 'moon-stars' : ' stars'))
-	},
-	{
-		regex: /^801$/,
-		value: day => day ? 'sun-cloud' : 'moon-cloud'
-	},
-	{
-		regex: /^802$/,
-		value: day => day ? 'cloud-sun' : 'cloud-moon'
-	},
-	{
-		regex: /^803$/,
-		value: day => day ? 'clouds-sun' : 'clouds-moon'
-	},
-	{
-		regex: /^8\d\d$/,
-		value: 'clouds'
-	},
+	{ regex: /^2\d2$/, value: 'thunderstorm' },
+	{ regex: /^2\d\d$/, value: day => day ? 'thunderstorm-sun' : 'thunderstorm-moon' },
+ 	{ regex: /^3\d\d$/, 	value: 'cloud-drizzle' 	},
+	{ regex: /^50[012]$/, value: day => day ? 'cloud-sun-rain' : 'cloud-moon-rain' },
+	{ regex: /^511$/, value: 'cloud-hail' },
+	{ regex: /^522|50[34]|531$/, value: 'cloud-showers-heavy' },
+	{ regex: /^5\d\d$/, value: 'cloud-showers' },
+	{ regex: /^600$/, value: 'snowflake' },
+	{ regex: /^61[12]$/, value: 'cloud-hail' },
+	{ regex: /^613$/, value: 'cloud-hail-mixed' },
+	{ regex: /^61\d$/, value: 'cloud-sleet' },
+	{ regex: /^62\d$/, value: 'cloud-snow' },
+	{ regex: /^6\d\d$/, value: 'snowflakes' },
+	{ regex: /^711$/, value: 'smoke' },
+	{ regex: /^721$/, value: 'smog' },
+	{ regex: /^731$/, value: 'smog' },
+	{ regex: /^762$/, value: 'volcano' },
+	{ regex: /^781$/, value: 'tornado' },
+	{ regex: /^7\d\d$/, value: 'fog' },
+	{ regex: /^800$/, value: day => day ? 'sun' : (Math.random() > 0.3 ? 'moon' : (Math.random() > 0.5 ? 'moon-stars' : ' stars')) },
+	{ regex: /^801$/, value: day => day ? 'sun-cloud' : 'moon-cloud' },
+	{ regex: /^802$/, value: day => day ? 'cloud-sun' : 'cloud-moon' },
+	{ regex: /^803$/, value: day => day ? 'clouds-sun' : 'clouds-moon' },
+	{ regex: /^8\d\d$/, value: 'clouds' },
 ]
 
 function formatTime(ts) {

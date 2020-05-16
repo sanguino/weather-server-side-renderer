@@ -27,15 +27,17 @@ async function renderPixels(temp, hum, bat, usb) {
     const browser = await puppeteer.launch()
     const page = await browser.newPage()
     await page.setViewport({ width: WIDTH, height: HEIGHT })
-    await page.goto(`file://${path.resolve('.')}/index.html?temp=${temp}&hum=${hum}&bat=${bat}&usb=${usb}`);
+    await page.goto('http://localhost:3223/');//`/?temp=${temp}&hum=${hum}&bat=${bat}&usb=${usb}`);
     //  await page.setContent(htmlContent, {waitUntil: 'networkidle2'});
-    await page.waitForResponse(response => response.ok())
-    const pixels = await page.screenshot()
+    //await page.waitForResponse(response => response.ok())
+    const pixels = await page.screenshot({path: 'example.png'})
     await browser.close()
     return pixels;
 }
 
-app.get('/', async (req, res) => {
+app.use('/', express.static('src'));
+
+app.get('/api', async (req, res) => {
     
     const pixels = await renderPixels(req.query.temp, req.query.hum, req.query.bat, req.query.usb)
     res.header("Access-Control-Allow-Origin", "*");
