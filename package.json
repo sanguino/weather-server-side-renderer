@@ -7,7 +7,7 @@
     "build": "rimraf public && rollup -c rollup.config.js",
     "dev:rollup": "rimraf public && rollup -w -c rollup.config.js",
     "dev:node": "nodemon server.js",
-    "dev:open": "open http://localhost:3223/?temp=34.3&hum=49.5&bat=98&usb=true",
+    "dev:open": "open 'http://localhost:3223/?temp=34.3&hum=49.5&bat=98&usb=true'",
     "start": "concurrently npm:dev*"
   },
   "author": "",
