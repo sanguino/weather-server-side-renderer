@@ -1,26 +1,28 @@
 const puppeteer = require('puppeteer')
 const express = require('express')
-const path = require('path')
 const app = express()
+const fs = require('fs')
+PNG = require("pngjs").PNG;
 
 const WIDTH = 128
 const HEIGHT = 296
 
-function calculatePizels(pixels) {
-    let pixelsData = []
-    let pixelsDataByte = ''
-    for (let i = 0; i < pixels.length; i += 4) {
-        pixelsDataByte += !!pixels[i]? '1': '0'
-
-        if (pixelsDataByte.length === 8) {
-            pixelsData.push(parseInt(pixelsDataByte, 2))
-            pixelsDataByte = ''
-        }
-    }
-    const buffer = new ArrayBuffer(pixelsData.length)
-    const uint8 = new Uint8Array(buffer)
-    uint8.set(pixelsData)
-    return uint8.toString()
+function calculatePizels(screenshot) {
+    return new Promise( (resolve, reject)=> {
+        new PNG().parse(screenshot, function (error, pixels) {
+            error && reject(error);
+            const pixelsData = []
+            let pixelsDataByte = ''
+            for (let i = 0; i < pixels.data.length; i += 4) {
+                pixelsDataByte += !!pixels.data[i]? '1': '0'
+                if (pixelsDataByte.length === 8) {
+                    pixelsData.push(parseInt(pixelsDataByte, 2))
+                    pixelsDataByte = ''
+                }
+            }
+            return resolve(pixelsData.toString())
+        });
+    })
 }
 
 async function renderPixels(temp, hum, bat, usb) {
@@ -28,13 +30,22 @@ async function renderPixels(temp, hum, bat, usb) {
     const page = await browser.newPage()
     await page.setViewport({ width: WIDTH, height: HEIGHT })
     await page.goto(`http://localhost:3223/?temp=${temp}&hum=${hum}&bat=${bat}&usb=${usb}`)
-    await page.waitForResponse(response => response.ok())
-    const pixels = await page.screenshot()
+    //await page.waitForResponse(response => response.ok())
+    //await page.waitForSelector('weather-app').shadowRoot
+    await page.waitFor(1000)
+    const pixels = await page.screenshot({
+        clip: {
+            x: 0,
+            y: 0,
+            width: WIDTH,
+            height: HEIGHT,
+        },
+    })
     await browser.close()
     return pixels
 }
 
-app.use('/', express.static('src'))
+app.use('/', express.static('public'))
 
 app.get('/api', async (req, res) => {
     
@@ -44,7 +55,7 @@ app.get('/api', async (req, res) => {
         width: WIDTH,
         height: HEIGHT,
         tick: (60 - new Date().getSeconds())*1000,
-        data: calculatePizels(pixels)
+        data: await calculatePizels(pixels)
     })
 })
 

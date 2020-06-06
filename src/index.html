@@ -1,42 +1,27 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
+
 <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="Description" content="Put your description here.">
+  <base href="/">
 
-    <meta charset="UTF-8"/>
-    <title>Font to Arduino</title>
-
-    <link rel="stylesheet" href="styles/index.css">
-
-    <link href="styles/fontawesome.min.css" rel="stylesheet">
-    <link href="styles/solid.min.css" rel="stylesheet">
-
+  <style>
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+      background: grey;
+    }
+  </style>
+  <title>weather-app</title>
 </head>
+
 <body>
+  <weather-app></weather-app>
 
-<div class="container">
-    <div class="icon-temp">
-        <div class="icon"></div>
-        <div class="temContainer">
-            <div class="temp"></div>
-            <div class="feels_like"></div>
-        </div>
-    </div>
-    
-    <div class="temp_min"></div>
-    <div class="temp_max"></div>
-    <div class="humidity"></div>
-    <div class="wind">
-        <div class="wind-deg"></div>
-        <div class="wind-speed"></div>
-    </div>
-    <div class="sunrise"></div>
-    <div class="sunset"></div>
-    <div class="date"></div>
-
-    <div class="in_temp"></div>
-    <div class="in_humidity"></div>
-    <div class="battery"></div>
-</div>
-<script type="text/javascript" src="./index.js"></script>
+  <script type="module" src="./WeatherApp.js"></script>
 </body>
+
 </html>
