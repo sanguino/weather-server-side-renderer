@@ -7,6 +7,11 @@ PNG = require("pngjs").PNG;
 const WIDTH = 128
 const HEIGHT = 296
 
+const puppeteerOptions = process.env.NODE_ENV === 'production' ? {
+    executablePath: '/usr/bin/chromium-browser',
+    args: ['--no-sandbox', '--headless', '--disable-gpu']
+} : {};
+
 function calculatePizels(screenshot) {
     return new Promise( (resolve, reject)=> {
         new PNG().parse(screenshot, function (error, pixels) {
@@ -26,7 +31,7 @@ function calculatePizels(screenshot) {
 }
 
 async function renderPixels(temp, hum, bat, usb) {
-    const browser = await puppeteer.launch()
+    const browser = await puppeteer.launch(puppeteerOptions)
     const page = await browser.newPage()
     await page.setViewport({ width: WIDTH, height: HEIGHT })
     await page.goto(`http://localhost:3223/?temp=${temp}&hum=${hum}&bat=${bat}&usb=${usb}`)
