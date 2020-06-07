@@ -6,9 +6,9 @@ RUN ["npm", "run", "build"]
 
 
 FROM zenika/alpine-chrome:with-node
-ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD true \
-    PUPPETEER_EXECUTABLE_PATH /usr/bin/chromium-browser \
-    NODE_ENV production
+ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD true
+ENV PUPPETEER_EXECUTABLE_PATH /usr/bin/chromium-browser
+ENV NODE_ENV production
 
 WORKDIR /usr/src/app
 COPY --from=build --chown=chrome /usr/src/app/package.json .
