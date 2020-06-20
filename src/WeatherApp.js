@@ -29,7 +29,6 @@ export class WeatherApp extends LitElement {
   get batIcon () {
     const usb = this.urlParams.get('usb');
     const bat = this.urlParams.get('bat');
-
     if (usb) return 'fas fa-battery-bolt';
     if (bat > 90) return 'fas fa-battery-full';
     if (bat > 65) return 'fas fa-battery-three-quarters';
@@ -47,18 +46,19 @@ export class WeatherApp extends LitElement {
         background: white;
         position: relative; 
       }
-      section:first-of-type {
-        margin-top:0;
+      hr {
+        margin: 6px 0;
       }
       section, footer {
         display: flex;
-        justify-content: center;
-        margin-top: 5px;
+        justify-content: space-around;
       }
       footer {
         position: absolute;
         bottom: 0;
         width: 100%;
+        border-top: 2px solid black;
+        align-items: center;
       }
       section.horizontal {
         width: 100%;
@@ -67,6 +67,12 @@ export class WeatherApp extends LitElement {
       }
       section.vertical {
         flex-direction: column;
+      }
+      section.right {
+        align-items: flex-end;
+      }
+      hr {
+        border-color: black;
       }
     `;
   }
@@ -82,11 +88,11 @@ export class WeatherApp extends LitElement {
       
       <section class="horizontal">
         <number-elem 
-          value="${this.urlParams.get('temp')}" 
+          value="${this.weather.main.temp}" 
           size="big">
         </number-elem>
         
-        <section class="vertical">
+        <section class="vertical right">
           <number-elem 
             value="${this.weather.main.temp_max}" 
             size="medium"
@@ -99,47 +105,69 @@ export class WeatherApp extends LitElement {
           </number-elem>
         </section>  
       </section>
-        
+      <hr />  
       <section class="horizontal">
-
         <number-elem 
-          value="${this.urlParams.get('hum')}" 
-          size="medium"
-          icon="humidity"
-          iconSize="big">
-        </number-elem> 
-        
-        <section class="left">
-        <fas-icon
-          icon="location-arrow" 
-          style="transform: rotate(${(this.weather.wind.deg||0) - 45}deg)">
-        </fas-icon>
-        
-        <number-elem 
-          value="${this.weather.wind.speed}" 
-          size="medium"
-          end="km/h">
-        </number-elem>
-      </section>   
-      </section>
-
-      <section class="horizontal">
+            value="${this.weather.main.humidity}" 
+            size="medium"
+            icon="humidity"
+            iconSize="big">
+          </number-elem> 
+  
+        <section class="vertical right">
           <time-elem
             value="${this.weather.sys.sunrise}"
-            size="small"
+            size="medium"
             icon="sunrise">
           </time-elem>
           <time-elem
             value="${this.weather.sys.sunset}"
-            size="small"
+            size="medium"
             icon="sunset">
           </time-elem>
+        </section>
+      </section>
+      <section class="horizontal">
+        <section>
+          <fas-icon
+            icon="location-arrow" 
+            style="transform: rotate(${(this.weather.wind.deg||0) - 45}deg)">
+          </fas-icon>
+          <number-elem 
+            value="${this.weather.wind.speed}" 
+            size="medium"
+            postIcon="km/h">
+          </number-elem>
         </section>  
+      </section>
+      <hr />  
+      <section class="horizontal">
+        <number-elem 
+          value="${this.urlParams.get('temp')}" 
+          size="big">
+        </number-elem>
         
+        <section class="vertical right">
+          <section class="horizontal">
+            <fas-icon icon="temperature-high" class="icon big"></fas-icon>
+            <fas-icon icon="house" class="icon big"></fas-icon>
+          </section>
+          <number-elem 
+            value="${this.urlParams.get('hum')}" 
+            size="medium"
+            icon="humidity">
+          </number-elem>
+        </section>  
+      </section>
+      
       <footer>
+        <time-elem
+          size="medium">
+        </time-elem>
         <number-elem 
           value="${this.urlParams.get('bat')}"
-          size="medium"
+          postValue="%"
+          size="small"
           iconSize="big"
           icon="${this.batIcon}">
         </number-elem>

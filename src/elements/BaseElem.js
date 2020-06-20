@@ -5,10 +5,11 @@ export class BaseElem extends LitElement {
   static get properties() {
     return {
       value: {type: Number},
+      postValue: {type: String},
       icon: {type: String},
       iconSize: {type: String},
       size: {type: String},
-      end: {type: String}
+      postIcon: {type: String}
     };
   }
 
@@ -21,6 +22,7 @@ export class BaseElem extends LitElement {
         font-family: 'Concert One';
         -webkit-font-smoothing: none;
         line-height:18px;
+        font-weight: bolder;
       }
       .integer.big {
         font-size: 55px;
@@ -32,8 +34,8 @@ export class BaseElem extends LitElement {
         line-height: 22px;
       }
       .integer.small {
-        font-size: 18px;
-        line-height: 18px;
+        font-size: 20px;
+        line-height: 20px;
       }
 
       .decimal {
@@ -52,6 +54,20 @@ export class BaseElem extends LitElement {
         font-size: 9px;
         line-height: 9px;
         display: none;
+      }
+      
+      .time.big {
+        font-size: 55px;
+        line-height: 42px;
+        padding-bottom: 5%;
+      }
+      .time.medium {
+        font-size: 20px;
+        line-height: 18px;
+      }
+      .time.small {
+        font-size: 18px;
+        line-height: 18px;
       }
       
       .icon.big {

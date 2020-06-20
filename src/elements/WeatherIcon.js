@@ -47,9 +47,11 @@ export class WeatherIcon extends LitElement {
     return css`
       :host {
         display: block;
+        padding-top: 5px;
       }
       fas-icon {
          font-size: 80px;
+         line-height: 80px;
          text-align: center;
       }
     `;

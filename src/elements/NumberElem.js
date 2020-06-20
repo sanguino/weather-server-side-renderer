@@ -15,9 +15,9 @@ export class NumberElem extends BaseElem {
   render() {
     return html`
     <div class="integer ${this.size}">${this.integer}<spam class="decimal ${this.size}">${this.decimal}</spam></div>
-    
+     ${this.postValue}
     <fas-icon icon="${this.icon}" class="icon ${this.iconSize || this.size}"></fas-icon>
-    ${this.end}
+    ${this.postIcon}
     `;
   }
 }
