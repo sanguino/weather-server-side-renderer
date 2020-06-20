@@ -18,7 +18,6 @@
     "puppeteer": "^3.0.4"
   },
   "devDependencies": {
-    "@gluon/font-awesome": "^1.0.0",
     "@open-wc/building-rollup": "^1.0.0",
     "concurrently": "^5.2.0",
     "lit-element": "^2.3.1",
