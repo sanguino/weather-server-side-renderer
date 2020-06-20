@@ -9,7 +9,7 @@ const HEIGHT = 296
 
 const puppeteerOptions = process.env.NODE_ENV === 'production' ? {
     executablePath: '/usr/bin/chromium-browser',
-    args: ['--no-sandbox', '--headless', '--disable-gpu']
+    args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage']
 } : {};
 
 function calculatePizels(screenshot) {
