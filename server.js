@@ -38,14 +38,7 @@ async function renderPixels(temp, hum, bat, usb) {
     //await page.waitForResponse(response => response.ok())
     //await page.waitForSelector('weather-app').shadowRoot
     await page.waitFor(1000)
-    const pixels = await page.screenshot({
-        clip: {
-            x: 0,
-            y: 0,
-            width: WIDTH,
-            height: HEIGHT,
-        },
-    })
+    const pixels = await page.screenshot()
     await browser.close()
     return pixels
 }
@@ -53,7 +46,7 @@ async function renderPixels(temp, hum, bat, usb) {
 app.use('/', express.static('public'))
 
 app.get('/api', async (req, res) => {
-    
+
     const pixels = await renderPixels(req.query.temp, req.query.hum, req.query.bat, req.query.usb)
     res.header("Access-Control-Allow-Origin", "*")
     res.json({
@@ -62,6 +55,18 @@ app.get('/api', async (req, res) => {
         tick: (60 - new Date().getSeconds())*1000,
         data: await calculatePizels(pixels)
     })
+})
+
+app.get('/test', async (req, res) => {
+
+    const pixels = await renderPixels(req.query.temp, req.query.hum, req.query.bat, req.query.usb)
+    const img = Buffer.from(pixels, 'binary');
+
+    res.writeHead(200, {
+        'Content-Type': 'image/png',
+        'Content-Length': img.length
+    });
+    res.end(img);
 })
 
 app.listen(3223)
