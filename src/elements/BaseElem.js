@@ -19,10 +19,10 @@ export class BaseElem extends LitElement {
         display: flex;
         align-items: center;
         font-size: 18px;
-        font-family: 'Concert One';
+        font-family: 'Ubuntu';
         -webkit-font-smoothing: none;
         line-height:18px;
-        font-weight: bolder;
+        font-weight: 700;
       }
       .integer.big {
         font-size: 55px;
