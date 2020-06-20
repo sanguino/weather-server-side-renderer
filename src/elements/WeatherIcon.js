@@ -30,18 +30,6 @@ const icons = [
 
 export class WeatherIcon extends LitElement {
 
-  constructor() {
-    super();
-    this.icon = 'thunderstorm';
-    this.iconList = ['thunderstorm','thunderstorm-sun','thunderstorm-moon','cloud-drizzle','cloud-sun-rain','cloud-moon-rain','cloud-hail','cloud-showers-heavy','cloud-showers','snowflake','cloud-hail','cloud-hail-mixed','cloud-sleet','cloud-snow','snowflakes','smoke','smog','smog','volcano','tornado','fog','sun','moon','moon-stars','stars','sun-cloud','moon-cloud','cloud-sun','cloud-moon','clouds-sun','clouds-moon','clouds'];
-    setInterval(()=> {
-      this.icon = this.iconList.shift()
-      this.iconList.push(this.icon)
-      //console.log(this.icon)
-      //console.log(document.querySelector('weather-app').shadowRoot.querySelector('weather-icon').shadowRoot.querySelector('fas-icon').shadowRoot.querySelector('i').offsetWidth)
-    }, 1000)
-  }
-
   static get properties() {
     return {
       weatherId: {type: Number},
@@ -50,10 +38,10 @@ export class WeatherIcon extends LitElement {
     };
   }
 
- /* get icon() {
+  get icon() {
     const icon = icons.find(elem => elem.regex.test(this.weatherId)).value
     return (typeof icon === 'function' ? icon(this.itsDay) : icon)
-  }*/
+  }
 
   static get styles() {
     return css`
