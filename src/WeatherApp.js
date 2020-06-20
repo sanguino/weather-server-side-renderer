@@ -12,7 +12,6 @@ export class WeatherApp extends LitElement {
     };
   }
 
-
   async firstUpdated() {
     await fetch(`https://api.openweathermap.org/data/2.5/weather?id=3118848&APPID=999f7d104881fc770d5a845d5c0ccfe7&units=metric`)
         .then(r => r.json())
@@ -46,6 +45,10 @@ export class WeatherApp extends LitElement {
         height: 296px;
         margin: 0;
         background: white;
+        position: relative; 
+      }
+      section:first-of-type {
+        margin-top:0;
       }
       section, footer {
         display: flex;
@@ -53,7 +56,7 @@ export class WeatherApp extends LitElement {
         margin-top: 5px;
       }
       footer {
-        position: fixed;
+        position: absolute;
         bottom: 0;
         width: 100%;
       }
@@ -70,7 +73,7 @@ export class WeatherApp extends LitElement {
 
   render() {
     return !this.weather ? html`loading...` : html`
-      <section class="center">
+      <section>
         <weather-icon 
           weatherId="${this.weather.weather[0].id}" 
           itsDay="${this.weather.dt > this.weather.sys.sunrise && this.weather.dt < this.weather.sys.sunset}">
