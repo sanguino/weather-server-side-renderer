@@ -18,8 +18,8 @@ export class BaseElem extends LitElement {
       :host {
         display: flex;
         align-items: center;
-        font-size: 18px;
-        font-family: 'Ubuntu';
+        font-size: 25px;
+        font-family: 'FORCED SQUARE';
         -webkit-font-smoothing: none;
         line-height:18px;
         font-weight: 700;
@@ -34,7 +34,7 @@ export class BaseElem extends LitElement {
         line-height: 22px;
       }
       .integer.small {
-        font-size: 20px;
+        font-size: 25px;
         line-height: 20px;
       }
 
@@ -62,7 +62,7 @@ export class BaseElem extends LitElement {
         padding-bottom: 5%;
       }
       .time.medium {
-        font-size: 20px;
+        font-size: 25px;
         line-height: 18px;
       }
       .time.small {

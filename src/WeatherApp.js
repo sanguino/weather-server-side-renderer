@@ -168,7 +168,7 @@ export class WeatherApp extends LitElement {
           value="${this.urlParams.get('bat')}"
           postValue="%"
           size="small"
-          iconSize="big"
+          iconSize="medium"
           icon="${this.batIcon}">
         </number-elem>
       </footer>
