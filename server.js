@@ -19,7 +19,7 @@ function calculatePizels(screenshot) {
             const pixelsData = []
             let pixelsDataByte = ''
             for (let i = 0; i < pixels.data.length; i += 4) {
-                pixelsDataByte += !!pixels.data[i]? '1': '0'
+                pixelsDataByte += pixels.data[i] > 200 ? '1': '0'
                 if (pixelsDataByte.length === 8) {
                     pixelsData.push(parseInt(pixelsDataByte, 2))
                     pixelsDataByte = ''
