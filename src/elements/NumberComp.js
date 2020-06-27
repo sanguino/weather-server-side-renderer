@@ -44,7 +44,7 @@ export class NumberComp extends LitElement {
         line-height: 15px;
       }
       .decimal.medium {
-        font-size: 18px;
+        font-size: 19px;
         line-height: 12px;
         position: relative;
         top: 4px;
