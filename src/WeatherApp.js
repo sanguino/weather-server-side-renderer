@@ -73,7 +73,8 @@ export class WeatherApp extends LitElement {
       .wind { grid-area: wind }
       .temp-in { grid-area: temp-in; padding: 10px 0 0 4px; }
       .hum-in { grid-area: hum-in; justify-self: end; padding-bottom: 8px; }
-
+      
+      http-error.weather-icon { padding: 0 }
     `;
   }
 
