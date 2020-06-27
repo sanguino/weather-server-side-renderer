@@ -1,19 +1,28 @@
 import { LitElement, html, css } from 'lit-element';
 import './elements/WeatherIcon';
-import './elements/NumberElem';
-import './elements/TimeElem';
+import './elements/BatteryIcon';
+import './elements/NumberComp';
+import './elements/TimeComp';
+import './elements/WindComp';
 
 export class WeatherApp extends LitElement {
 
   static get properties() {
     return {
-      urlParams: { type: URLSearchParams },
-      weather: { type: Object },
+      urlParams: {
+        attribute: false,
+        type: URLSearchParams
+      },
+      weatherToken: { type: String },
+      weather: {
+        attribute: false,
+        type: Object
+      },
     };
   }
 
   async firstUpdated() {
-    await fetch(`https://api.openweathermap.org/data/2.5/weather?id=3118848&APPID=999f7d104881fc770d5a845d5c0ccfe7&units=metric`)
+    await fetch(`https://api.openweathermap.org/data/2.5/weather?id=${this.weatherToken}&units=metric`)
         .then(r => r.json())
         .then(async data => {
           this.weather = data;
@@ -26,152 +35,124 @@ export class WeatherApp extends LitElement {
     this.urlParams = new URLSearchParams(window.location.search);
   }
 
-  get batIcon () {
-    const usb = this.urlParams.get('usb');
-    const bat = this.urlParams.get('bat');
-    if (usb) return 'fas fa-battery-bolt';
-    if (bat > 90) return 'fas fa-battery-full';
-    if (bat > 65) return 'fas fa-battery-three-quarters';
-    if (bat > 35) return 'fas fa-battery-half';
-    if (bat > 10) return 'fas fa-battery-quarter';
-    return 'fas fa-battery-empty';
-  }
   static get styles() {
     return css`
       :host {
+        background: url(../imgs/house.png) no-repeat;
         display: block;
         width: 128px;
         height: 296px;
-        margin: 0;
-        background: white;
-        position: relative; 
-      }
-      hr {
-        margin: 6px 0;
-      }
-      section, footer {
-        display: flex;
-        justify-content: space-around;
-      }
-      footer {
-        position: absolute;
-        bottom: 0;
-        width: 100%;
-        border-top: 2px solid black;
-        align-items: center;
-      }
-      section.horizontal {
-        width: 100%;
-        justify-content: space-around;
-        align-items: center;
-      }
-      section.vertical {
-        flex-direction: column;
-      }
-      section.right {
-        align-items: flex-end;
-      }
-      hr {
-        border-color: black;
-      }
+        display: grid;
+        grid-template-columns: auto auto;
+        grid-template-rows: 16px 80px 40px 25px 25px 30px 20px 30px 30px;
+        grid-template-areas: 
+          "clock battery"
+          "weather-icon weather-icon"
+          "sunrise sunset"
+          "temp-out temp-max"
+          "temp-out temp-min"
+          "wind hum-out"
+          "ceil ceil"
+          "temp-in ."
+          "temp-in hum-in";
+      }    
+      .clock { grid-area: clock }
+      .battery { grid-area: battery; justify-self: end;}
+      .weather-icon { grid-area: weather-icon; justify-self: center; }
+      .sunrise { grid-area: sunrise }
+      .sunset { grid-area: sunset }
+      .temp-out { grid-area: temp-out }
+      .temp-max { grid-area: temp-max; justify-self: end;}
+      .temp-min { grid-area: temp-min; justify-self: end;}
+      .hum-out { grid-area: hum-out; justify-self: end;}
+      .wind { grid-area: wind }
+      .temp-in { grid-area: temp-in }
+      .hum-in { grid-area: hum-in; justify-self: end;}
     `;
   }
 
   render() {
     return !this.weather ? html`loading...` : html`
-      <section>
+      
+        
+        <time-comp
+          class="clock"
+          align="start">
+        </time-comp>
+        
+        <battery-icon
+          class="battery"
+          bat="${this.urlParams.get('bat')}"
+          ?usb="${this.urlParams.get('usb') === "true"}">
+        </battery-icon>
+        
+        
         <weather-icon 
+          class="weather-icon"
           weatherId="${this.weather.weather[0].id}" 
           itsDay="${this.weather.dt > this.weather.sys.sunrise && this.weather.dt < this.weather.sys.sunset}">
         </weather-icon>
-      </section>
-      
-      <section class="horizontal">
-        <number-elem 
+    
+        <time-comp
+            class="sunrise"
+            value="${this.weather.sys.sunrise}"
+            icon="sunrise"
+            align="center">
+        </time-comp>
+        <time-comp
+            class="sunset"
+            value="${this.weather.sys.sunset}"
+            icon="sunset"
+            align="center">
+          </time-comp>
+          
+        <number-comp 
+          class="temp-out"
           value="${this.weather.main.temp}" 
           size="big">
-        </number-elem>
+        </number-comp>
         
-        <section class="vertical right">
-          <number-elem 
+          <number-comp 
+            class="temp-max"
             value="${this.weather.main.temp_max}" 
             size="medium"
-            icon="temperature-up">
-          </number-elem>
-          <number-elem 
+            icon="temp-max">
+          </number-comp>
+          <number-comp 
+            class="temp-min"
             value="${this.weather.main.temp_min}" 
             size="medium"
-            icon="temperature-down">
-          </number-elem>
-        </section>  
-      </section>
-      <hr />  
-      <section class="horizontal">
-        <number-elem 
-            value="${this.weather.main.humidity}" 
-            size="medium"
-            icon="humidity"
-            iconSize="big">
-          </number-elem> 
-  
-        <section class="vertical right">
-          <time-elem
-            value="${this.weather.sys.sunrise}"
-            size="medium"
-            icon="sunrise">
-          </time-elem>
-          <time-elem
-            value="${this.weather.sys.sunset}"
-            size="medium"
-            icon="sunset">
-          </time-elem>
-        </section>
-      </section>
-      <section class="horizontal">
-        <section>
-          <fas-icon
-            icon="location-arrow" 
-            style="transform: rotate(${(this.weather.wind.deg||0) - 45}deg)">
-          </fas-icon>
-          <number-elem 
-            value="${this.weather.wind.speed}" 
-            size="medium"
-            postIcon="km/h">
-          </number-elem>
-        </section>  
-      </section>
-      <hr />  
-      <section class="horizontal">
-        <number-elem 
+            icon="temp-min">
+          </number-comp>
+   
+        <number-comp 
+          class="hum-out"
+          value="${this.weather.main.humidity}" 
+          size="medium"
+          icon="hum-out"
+          iconSize="big">
+        </number-comp> 
+   
+        <wind-comp
+          class="wind"
+          velocity="${this.weather.wind.speed}"
+          angle="${this.weather.wind.deg}">
+        </wind-comp>
+
+        <number-comp 
+          class="temp-in"
           value="${this.urlParams.get('temp')}" 
-          size="big">
-        </number-elem>
-        
-        <section class="vertical right">
-          <section class="horizontal">
-            <fas-icon icon="temperature-high" class="icon big"></fas-icon>
-            <fas-icon icon="house" class="icon big"></fas-icon>
-          </section>
-          <number-elem 
-            value="${this.urlParams.get('hum')}" 
-            size="medium"
-            icon="humidity">
-          </number-elem>
-        </section>  
-      </section>
-      
-      <footer>
-        <time-elem
-          size="medium">
-        </time-elem>
-        <number-elem 
-          value="${this.urlParams.get('bat')}"
-          postValue="%"
-          size="small"
-          iconSize="medium"
-          icon="${this.batIcon}">
-        </number-elem>
-      </footer>
+          size="big"
+          color="white">
+        </number-comp>
+
+        <number-comp 
+          class="hum-in"
+          value="${this.urlParams.get('hum')}" 
+          size="medium"
+          icon="hum-in"
+          color="white">
+        </number-comp>
     `;
   }
 }

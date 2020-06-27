@@ -16,7 +16,8 @@ export default merge(baseConfig, {
     copy({
       targets: [
         { src: 'src/css/**/*', dest: 'public/css' },
-        { src: 'src/webfonts/**/*', dest: 'public/webfonts' }
+        { src: 'src/webfonts/**/*', dest: 'public/webfonts' },
+        { src: 'src/imgs/**/*', dest: 'public/imgs' },
       ]
     })
   ],

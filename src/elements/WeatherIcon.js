@@ -1,5 +1,4 @@
 import { LitElement, html, css } from 'lit-element';
-import './FasIcon';
 
 const icons = [
   { regex: /^2\d2$/, value: 'thunderstorm' },
@@ -26,7 +25,7 @@ const icons = [
   { regex: /^802$/, value: day => day ? 'cloud-sun' : 'cloud-moon' },
   { regex: /^803$/, value: day => day ? 'clouds-sun' : 'clouds-moon' },
   { regex: /^8\d\d$/, value: 'clouds' },
-]
+];
 
 export class WeatherIcon extends LitElement {
 
@@ -39,7 +38,7 @@ export class WeatherIcon extends LitElement {
   }
 
   get icon() {
-    const icon = icons.find(elem => elem.regex.test(this.weatherId)).value
+    const icon = icons.find(elem => elem.regex.test(this.weatherId)).value;
     return (typeof icon === 'function' ? icon(this.itsDay) : icon)
   }
 
@@ -47,9 +46,8 @@ export class WeatherIcon extends LitElement {
     return css`
       :host {
         display: block;
-        padding-top: 5px;
       }
-      fas-icon {
+      i.fas {
          font-size: 80px;
          line-height: 80px;
          text-align: center;
@@ -58,7 +56,10 @@ export class WeatherIcon extends LitElement {
   }
 
   render() {
-    return html`<fas-icon icon="${this.icon}" fixwidth="100px"></fas-icon>`;
+    return html`
+    <link rel="stylesheet" href="./css/fontawesome.min.css">
+    <link rel="stylesheet" href="./css/solid.min.css">
+    <i class="fas fa-${this.icon}"></i>`;
   }
 }
 

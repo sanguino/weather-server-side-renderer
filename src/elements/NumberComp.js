@@ -1,43 +1,40 @@
-import { LitElement, css } from 'lit-element';
+import {css, html, LitElement} from 'lit-element';
 
-export class BaseElem extends LitElement {
+export class NumberComp extends LitElement {
 
   static get properties() {
     return {
       value: {type: Number},
-      postValue: {type: String},
       icon: {type: String},
-      iconSize: {type: String},
       size: {type: String},
-      postIcon: {type: String}
+      color: {type: String},
     };
   }
-
   static get styles() {
     return css`
       :host {
         display: flex;
         align-items: center;
-        font-size: 25px;
+        font-size: 24px;
         font-family: 'FORCED SQUARE';
         -webkit-font-smoothing: none;
         line-height:18px;
         font-weight: 700;
       }
+      
+      .white {
+        color: white;
+      }
       .integer.big {
-        font-size: 55px;
-        line-height: 42px;
+        font-size: 70px;
+        line-height: 46px;
         padding-bottom: 5%;
       }
       .integer.medium {
-        font-size: 30px;
+        font-size: 34px;
         line-height: 22px;
       }
-      .integer.small {
-        font-size: 25px;
-        line-height: 20px;
-      }
-
+      
       .decimal {
         vertical-align: super;
       }
@@ -50,25 +47,6 @@ export class BaseElem extends LitElement {
         line-height: 12px;
         display: none;
       }
-      .decimal.small {
-        font-size: 9px;
-        line-height: 9px;
-        display: none;
-      }
-      
-      .time.big {
-        font-size: 55px;
-        line-height: 42px;
-        padding-bottom: 5%;
-      }
-      .time.medium {
-        font-size: 25px;
-        line-height: 18px;
-      }
-      .time.small {
-        font-size: 18px;
-        line-height: 18px;
-      }
       
       .icon.big {
         font-size: 24px;
@@ -78,10 +56,27 @@ export class BaseElem extends LitElement {
         font-size: 18px;
         line-height: 18px;
       }
-      .icon.small {
-        font-size: 12px;
-        line-height: 12px;
-      }
+    `;
+  }
+  get integer() {
+    return Math.floor(this.value);
+  }
+
+  get decimal() {
+    return Math.round(10 * (this.value - this.integer));
+  }
+
+  render() {
+    return html`
+    <div class="integer ${this.size} ${this.color}">${this.integer}<spam class="decimal ${this.size}">${this.decimal}</spam></div>
+       
+    ${this.icon ?
+        html`<img src="imgs/${this.icon}.png">` :
+        ``
+    }
+    
     `;
   }
 }
+
+customElements.define('number-comp', NumberComp);

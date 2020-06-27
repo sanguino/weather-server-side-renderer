@@ -1,11 +1,7 @@
 @font-face {
     font-family: 'FORCED SQUARE';
-    src: url('../webfonts/FORCEDSQUARE.eot');
-    src: url('../webfonts/FORCEDSQUARE.eot?#iefix') format('embedded-opentype'),
-        url('../webfonts/FORCEDSQUARE.woff2') format('woff2'),
-        url('../webfonts/FORCEDSQUARE.woff') format('woff'),
-        url('../webfonts/FORCEDSQUARE.ttf') format('truetype'),
-        url('../webfonts/FORCEDSQUARE.svg#FORCEDSQUARE') format('svg');
+    src: url('../webfonts/FORCEDSQUARE.woff2') format('woff2'),
+    url('../webfonts/FORCEDSQUARE.woff') format('woff');
     font-weight: 500;
     font-style: normal;
     font-display: swap;
