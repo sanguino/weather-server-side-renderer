@@ -15,15 +15,14 @@ export class WindComp extends LitElement {
       :host {
         display: flex;
         align-items: center;
-        font-size: 34px;
-        line-height: 23px;
         font-family: 'FORCED SQUARE';
         -webkit-font-smoothing: none;
-        font-weight: 700;
       }
       
       div.value {
         padding-left: 2px;
+        font-size: 34px;
+        line-height: 23px;
       }
       
       div.unit {

@@ -20,11 +20,8 @@ export class NumberComp extends LitElement {
       :host {
         display: flex;
         align-items: center;
-        font-size: 24px;
         font-family: 'FORCED SQUARE';
         -webkit-font-smoothing: none;
-        line-height:18px;
-        font-weight: 700;
       }
       
       .white {

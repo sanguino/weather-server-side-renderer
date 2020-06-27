@@ -22,7 +22,6 @@ export class TimeComp extends LitElement {
         flex-direction: column;
         font-family: 'FORCED SQUARE';
         -webkit-font-smoothing: none;
-        font-weight: 700;
       }
       
       div.center {
