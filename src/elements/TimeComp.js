@@ -33,16 +33,14 @@ export class TimeComp extends LitElement {
         align-items: flex-start;
       }
       
+      img {
+        padding-bottom: 1px;
+      }
+      
       span {
         font-size: 24px;
         line-height: 18px;
       }
-      
-      fas-icon {
-        font-size: 18px;
-        line-height: 18px;
-      }
-      
       `;
   }
 

@@ -29,6 +29,17 @@ const icons = [
 
 export class WeatherIcon extends LitElement {
 
+  /*
+  constructor() {
+    super();
+    const list = [ 'thunderstorm', 'thunderstorm-sun', 'thunderstorm-moon', 'cloud-drizzle', 'cloud-sun-rain', 'cloud-moon-rain', 'cloud-hail', 'cloud-showers-heavy', 'cloud-showers', 'snowflake', 'cloud-hail', 'cloud-hail-mixed', 'cloud-sleet', 'cloud-snow', 'snowflakes', 'smoke', 'smog', 'smog', 'volcano', 'tornado', 'fog', 'sun', 'moon', 'moon-stars', ' stars', 'sun-cloud', 'moon-cloud', 'cloud-sun', 'cloud-moon', 'clouds-sun', 'clouds-moon', 'clouds'];
+    setInterval(() => {
+      this.icon = list.shift();
+      list.push(this.icon)
+    }, 2000);
+  }
+  */
+
   static get properties() {
     return {
       weatherId: {type: Number},
