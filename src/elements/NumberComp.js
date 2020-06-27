@@ -32,7 +32,7 @@ export class NumberComp extends LitElement {
         line-height: 46px;
       }
       .integer.medium {
-        font-size: 34px;
+        font-size: 35px;
         line-height: 22px;
       }
       
@@ -40,14 +40,14 @@ export class NumberComp extends LitElement {
         vertical-align: super;
       }
       .decimal.big {
-        font-size: 25px;
+        font-size: 24px;
         line-height: 15px;
       }
       .decimal.medium {
-        font-size: 17px;
+        font-size: 18px;
         line-height: 12px;
         position: relative;
-        top: 3px;
+        top: 4px;
       }
     `;
   }

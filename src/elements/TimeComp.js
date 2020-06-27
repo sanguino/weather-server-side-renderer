@@ -37,7 +37,8 @@ export class TimeComp extends LitElement {
       }
       
       span {
-        font-size: 24px;
+        font-size:23px;
+        font-weight:700;
         line-height: 18px;
       }
       `;
