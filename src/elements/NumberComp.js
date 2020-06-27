@@ -2,6 +2,11 @@ import {css, html, LitElement} from 'lit-element';
 
 export class NumberComp extends LitElement {
 
+  constructor() {
+    super();
+    this.color = "black"
+  }
+
   static get properties() {
     return {
       value: {type: Number},
@@ -28,7 +33,6 @@ export class NumberComp extends LitElement {
       .integer.big {
         font-size: 70px;
         line-height: 46px;
-        padding-bottom: 5%;
       }
       .integer.medium {
         font-size: 34px;
@@ -43,18 +47,10 @@ export class NumberComp extends LitElement {
         line-height: 15px;
       }
       .decimal.medium {
-        font-size: 12px;
+        font-size: 17px;
         line-height: 12px;
-        display: none;
-      }
-      
-      .icon.big {
-        font-size: 24px;
-        line-height: 24px;
-      }
-      .icon.medium {
-        font-size: 18px;
-        line-height: 18px;
+        position: relative;
+        top: 3px;
       }
     `;
   }

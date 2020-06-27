@@ -22,7 +22,11 @@ export class WindComp extends LitElement {
         font-weight: 700;
       }
       
-      div.end {
+      div.value {
+        padding-left: 2px;
+      }
+      
+      div.unit {
         font-size: 14px;
         line-height: 10px;
       }
@@ -45,8 +49,8 @@ export class WindComp extends LitElement {
   render() {
     return html`
     <img src="imgs/${this.windIcon}">
-    <div>${Math.round(this.velocity * 3.6)}</div>
-    <div class="end">KM<br />
+    <div class="value">${Math.round(this.velocity * 3.6)}</div>
+    <div class="unit">KM<br />
          H
      <div>
     `;

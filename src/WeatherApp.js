@@ -43,7 +43,7 @@ export class WeatherApp extends LitElement {
         width: 128px;
         height: 296px;
         display: grid;
-        grid-template-columns: auto auto;
+        grid-template-columns: 75px auto;
         grid-template-rows: 16px 80px 40px 25px 25px 30px 20px 30px 30px;
         grid-template-areas: 
           "clock battery"
@@ -55,19 +55,25 @@ export class WeatherApp extends LitElement {
           "ceil ceil"
           "temp-in ."
           "temp-in hum-in";
-      }    
+      }  
+ 
+      .clock, .battery, .weather-icon, .sunrise, .sunset, .temp-max, .temp-min, .hum-out, .wind, .hum-in {
+        padding: 1px;
+      }
+
       .clock { grid-area: clock }
       .battery { grid-area: battery; justify-self: end;}
       .weather-icon { grid-area: weather-icon; justify-self: center; }
-      .sunrise { grid-area: sunrise }
-      .sunset { grid-area: sunset }
-      .temp-out { grid-area: temp-out }
-      .temp-max { grid-area: temp-max; justify-self: end;}
-      .temp-min { grid-area: temp-min; justify-self: end;}
-      .hum-out { grid-area: hum-out; justify-self: end;}
+      .sunrise { grid-area: sunrise; padding-right: 16px; }
+      .sunset { grid-area: sunset; padding-right: 6px; }
+      .temp-out { grid-area: temp-out; padding: 10px 0 0 4px; }
+      .temp-max { grid-area: temp-max; justify-self: end; padding-top: 10px; }
+      .temp-min { grid-area: temp-min; justify-self: end; padding-bottom: 2px; }
+      .hum-out { grid-area: hum-out; justify-self: end; }
       .wind { grid-area: wind }
-      .temp-in { grid-area: temp-in }
-      .hum-in { grid-area: hum-in; justify-self: end;}
+      .temp-in { grid-area: temp-in; padding: 10px 0 0 4px; }
+      .hum-in { grid-area: hum-in; justify-self: end; padding-bottom: 8px; }
+
     `;
   }
 
