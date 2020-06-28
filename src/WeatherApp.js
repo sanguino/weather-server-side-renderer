@@ -62,7 +62,7 @@ export class WeatherApp extends LitElement {
       }
 
       .clock { grid-area: clock }
-      .battery { grid-area: battery; justify-self: end;}
+      .battery { grid-area: battery; justify-self: end; padding: 2px}
       .weather-icon { grid-area: weather-icon; justify-self: center; }
       .sunrise { grid-area: sunrise; padding: 4px 0 0 6px; width: 50px }
       .sunset { grid-area: sunset; padding: 4px 0 0 0; width: 50px }

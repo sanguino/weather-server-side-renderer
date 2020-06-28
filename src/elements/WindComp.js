@@ -15,7 +15,8 @@ export class WindComp extends LitElement {
       :host {
         display: flex;
         align-items: center;
-        font-family: 'FORCED SQUARE';
+        font-family: 'Players';
+        text-rendering: geometricPrecision;
         -webkit-font-smoothing: none;
       }
       
@@ -26,8 +27,8 @@ export class WindComp extends LitElement {
       }
       
       div.unit {
-        font-size: 14px;
-        line-height: 10px;
+        font-size: 15px;
+        line-height: 12px;
       }
     `;
   }
@@ -49,9 +50,7 @@ export class WindComp extends LitElement {
     return html`
     <img src="imgs/${this.windIcon}">
     <div class="value">${Math.round(this.velocity * 3.6)}</div>
-    <div class="unit">KM<br />
-         H
-     <div>
+    <div class="unit">KM<br />H<div>
     `;
   }
 }

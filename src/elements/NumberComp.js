@@ -20,7 +20,8 @@ export class NumberComp extends LitElement {
       :host {
         display: flex;
         align-items: center;
-        font-family: 'FORCED SQUARE';
+        font-family: 'Players';
+        text-rendering: geometricPrecision;
         -webkit-font-smoothing: none;
       }
       
@@ -28,26 +29,30 @@ export class NumberComp extends LitElement {
         color: white;
       }
       .integer.big {
-        font-size: 70px;
-        line-height: 46px;
+        font-size: 51px;
       }
       .integer.medium {
-        font-size: 35px;
-        line-height: 22px;
+        font-size: 27px;
       }
       
       .decimal {
         vertical-align: super;
       }
       .decimal.big {
-        font-size: 24px;
-        line-height: 15px;
+        font-size: 19px;
+        position: relative;
+        top: -3px;
+        left: 2px
       }
       .decimal.medium {
-        font-size: 19px;
-        line-height: 12px;
+        font-size: 15px;
         position: relative;
-        top: 4px;
+        top: 2px;
+        min-width: 8px;
+      }
+      
+      img {
+        padding-left: 2px;
       }
     `;
   }

@@ -20,7 +20,8 @@ export class TimeComp extends LitElement {
       div {
         display: flex;
         flex-direction: column;
-        font-family: 'FORCED SQUARE';
+        font-family: 'Players';
+        text-rendering: geometricPrecision;
         -webkit-font-smoothing: none;
       }
       
@@ -37,9 +38,8 @@ export class TimeComp extends LitElement {
       }
       
       span {
-        font-size:23px;
+        font-size:19px;
         font-weight:700;
-        line-height: 18px;
       }
       `;
   }
