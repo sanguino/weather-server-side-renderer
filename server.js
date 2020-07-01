@@ -31,11 +31,12 @@ function calculatePizels(screenshot) {
     })
 }
 
-async function renderPixels(temp, hum, bat, usb) {
+async function renderPixels(error, temp, hum, bat, usb) {
     const browser = await puppeteer.launch(puppeteerOptions)
     const page = await browser.newPage()
-    await page.setViewport({ width: WIDTH, height: HEIGHT })
-    await page.goto(`http://localhost:3223/?temp=${temp}&hum=${hum}&bat=${bat}&usb=${usb}`)
+    await page.setViewport({width: WIDTH, height: HEIGHT})
+    const url = `http://localhost:3223/?${error ? `error=${error}` : `temp=${temp}&hum=${hum}&bat=${bat}&usb=${usb}`}`;
+    await page.goto(url)
     //await page.waitForResponse(response => response.ok())
     //await page.waitForSelector('weather-app').shadowRoot
     await page.waitFor(1000)
@@ -48,7 +49,7 @@ app.use('/', express.static('public'))
 
 app.get('/api', async (req, res) => {
 
-    const pixels = await renderPixels(req.query.temp, req.query.hum, req.query.bat, req.query.usb)
+    const pixels = await renderPixels(req.query.error, req.query.temp, req.query.hum, req.query.bat, req.query.usb)
     res.header("Access-Control-Allow-Origin", "*")
     res.json({
         width: WIDTH,
