@@ -22,8 +22,7 @@ export class WindComp extends LitElement {
       
       div.value {
         padding-left: 2px;
-        font-size: 34px;
-        line-height: 23px;
+        font-size: 27px;
       }
       
       div.unit {
