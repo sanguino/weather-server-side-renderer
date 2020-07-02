@@ -1,7 +1,6 @@
 const puppeteer = require('puppeteer')
 const express = require('express')
 const app = express()
-const fs = require('fs')
 PNG = require("pngjs").PNG;
 
 const WIDTH = 128
@@ -13,7 +12,7 @@ const puppeteerOptions = process.env.NODE_ENV === 'production' ? {
     args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage']
 } : {};
 
-function calculatePizels(screenshot) {
+function calculatePixels(screenshot) {
     return new Promise( (resolve, reject)=> {
         new PNG().parse(screenshot, function (error, pixels) {
             error && reject(error);
@@ -37,8 +36,6 @@ async function renderPixels(error, temp, hum, bat, usb) {
     await page.setViewport({width: WIDTH, height: HEIGHT})
     const url = `http://localhost:3223/?${error ? `error=${error}` : `temp=${temp}&hum=${hum}&bat=${bat}&usb=${usb}`}`;
     await page.goto(url)
-    //await page.waitForResponse(response => response.ok())
-    //await page.waitForSelector('weather-app').shadowRoot
     await page.waitFor(1000)
     const pixels = await page.screenshot()
     await browser.close()
@@ -55,7 +52,7 @@ app.get('/api', async (req, res) => {
         width: WIDTH,
         height: HEIGHT,
         tick: (60 - new Date().getSeconds())*1000,
-        data: await calculatePizels(pixels)
+        data: await calculatePixels(pixels)
     })
 })
 
@@ -69,6 +66,29 @@ app.get('/test', async (req, res) => {
         'Content-Length': img.length
     });
     res.end(img);
+})
+
+app.get('/characters', async (req, res) => {
+
+    const characters = ['char_1', 'char_2', 'char_3', 'char_4', 'char_5', 'char_6', 'char_7', 'char_8', 'char_9', 'char_0', 'char_semi_colon'];
+
+    const browser = await puppeteer.launch()
+    const page = await browser.newPage()
+    await page.setViewport({width: WIDTH, height: HEIGHT})
+    const url = `http://localhost:3223/characters.html`;
+    await page.goto(url)
+    await page.waitFor(1000)
+
+    const result = {}
+    for (const char of characters) {
+        const elem = await page.$(`span#${char}`);
+        const screenShot = await elem.screenshot();
+        result[char] = await calculatePixels(screenShot);
+    }
+
+    await browser.close()
+    res.header("Access-Control-Allow-Origin", "*")
+    res.json(result)
 })
 
 app.listen(3223)
