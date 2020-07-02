@@ -15,6 +15,7 @@ export default merge(baseConfig, {
   plugins: [
     copy({
       targets: [
+        { src: 'src/characters.html', dest: 'public' },
         { src: 'src/css/**/*', dest: 'public/css' },
         { src: 'src/webfonts/**/*', dest: 'public/webfonts' },
         { src: 'src/imgs/**/*', dest: 'public/imgs' },
