@@ -14,71 +14,66 @@ const puppeteerOptions = process.env.NODE_ENV === 'production' ? {
 
 function calculatePixels(screenshot) {
     return new Promise( (resolve, reject)=> {
-        new PNG().parse(screenshot, function (error, pixels) {
+        new PNG().parse(screenshot, function (error, png) {
             error && reject(error);
             const pixelsData = []
             let pixelsDataByte = ''
-            for (let i = 0; i < pixels.data.length; i += 4) {
-                pixelsDataByte += pixels.data[i] > THRESHOLD ? '1': '0'
+            for (let i = 0; i < png.data.length; i += 4) {
+                pixelsDataByte += png.data[i] > THRESHOLD ? '1': '0'
                 if (pixelsDataByte.length === 8) {
                     pixelsData.push(parseInt(pixelsDataByte, 2))
                     pixelsDataByte = ''
                 }
             }
-            return resolve(pixelsData.toString())
+            return resolve({
+                data: pixelsData.toString(),
+                width: png.width,
+                height: png.height,
+            })
         });
     })
 }
 
-async function renderPixels(error, temp, hum, bat, usb) {
-    const browser = await puppeteer.launch(puppeteerOptions)
+async function createPuppeteer(url) {
+    const browser = await puppeteer.launch()
     const page = await browser.newPage()
     await page.setViewport({width: WIDTH, height: HEIGHT})
-    const url = `http://localhost:3223/?${error ? `error=${error}` : `temp=${temp}&hum=${hum}&bat=${bat}&usb=${usb}`}`;
     await page.goto(url)
     await page.waitFor(1000)
-    const pixels = await page.screenshot()
-    await browser.close()
-    return pixels
+    return {browser, page}
 }
 
 app.use('/', express.static('public'))
 
-app.get('/api', async (req, res) => {
-
-    const pixels = await renderPixels(req.query.error, req.query.temp, req.query.hum, req.query.bat, req.query.usb)
+app.get(['/api/weather', '/api/error', '/api/test'], async (req, res) => {
+    const url = `http://localhost:3223/?${req.path.endsWith('error') ? `error=true` : `temp=${req.query.temp}&hum=${req.query.hum}&bat=${req.query.bat}&usb=${req.query.usb}`}`
+    const {browser, page} = await createPuppeteer(url);
+    const pixels = await page.screenshot()
+    await browser.close()
     res.header("Access-Control-Allow-Origin", "*")
-    res.json({
-        width: WIDTH,
-        height: HEIGHT,
-        tick: (60 - new Date().getSeconds())*1000,
-        data: await calculatePixels(pixels)
-    })
+
+    if (!req.path.endsWith('test')) {
+        res.json({
+            width: WIDTH,
+            height: HEIGHT,
+            tick: (60 - new Date().getSeconds())*1000,
+            data: await calculatePixels(pixels).data,
+        })
+    } else {
+        const img = Buffer.from(pixels, 'binary');
+        res.writeHead(200, {
+            'Content-Type': 'image/png',
+            'Content-Length': img.length
+        });
+        res.end(img);
+    }
+
 })
 
-app.get('/test', async (req, res) => {
-
-    const pixels = await renderPixels(req.query.temp, req.query.hum, req.query.bat, req.query.usb)
-    const img = Buffer.from(pixels, 'binary');
-
-    res.writeHead(200, {
-        'Content-Type': 'image/png',
-        'Content-Length': img.length
-    });
-    res.end(img);
-})
-
-app.get('/characters', async (req, res) => {
+app.get('/api/characters', async (req, res) => {
 
     const characters = ['char_1', 'char_2', 'char_3', 'char_4', 'char_5', 'char_6', 'char_7', 'char_8', 'char_9', 'char_0', 'char_semi_colon'];
-
-    const browser = await puppeteer.launch()
-    const page = await browser.newPage()
-    await page.setViewport({width: WIDTH, height: HEIGHT})
-    const url = `http://localhost:3223/characters.html`;
-    await page.goto(url)
-    await page.waitFor(1000)
-
+    const {browser, page} = await createPuppeteer(`http://localhost:3223/characters.html`);
     const result = {}
     for (const char of characters) {
         const elem = await page.$(`span#${char}`);
