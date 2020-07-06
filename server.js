@@ -53,12 +53,15 @@ app.get(['/api/weather', '/api/error', '/api/test'], async (req, res) => {
     await browser.close()
     res.header("Access-Control-Allow-Origin", "*")
 
+    const time = new Date();
     if (!req.path.endsWith('test')) {
         res.json({
             width: WIDTH,
             height: HEIGHT,
-            tick: (60 - new Date().getSeconds())*1000,
+            tick: (60 - time.getSeconds())*1000,
             data: (await calculatePixels(pixels)).data,
+            hours: time.getHours(),
+            minutes: time.getMinutes(),
         })
     } else {
         const img = Buffer.from(pixels, 'binary');
