@@ -25,6 +25,7 @@ function calculatePixels(screenshot) {
                     pixelsDataByte = ''
                 }
             }
+            console.log(pixelsData)
             return resolve({
                 data: pixelsData.toString(),
                 width: png.width,
@@ -57,7 +58,7 @@ app.get(['/api/weather', '/api/error', '/api/test'], async (req, res) => {
             width: WIDTH,
             height: HEIGHT,
             tick: (60 - new Date().getSeconds())*1000,
-            data: await calculatePixels(pixels).data,
+            data: (await calculatePixels(pixels)).data,
         })
     } else {
         const img = Buffer.from(pixels, 'binary');
