@@ -25,9 +25,8 @@ function calculatePixels(screenshot) {
                     pixelsDataByte = ''
                 }
             }
-            console.log(pixelsData)
             return resolve({
-                data: pixelsData.toString(),
+                data: pixelsData,
                 width: png.width,
                 height: png.height,
             })
