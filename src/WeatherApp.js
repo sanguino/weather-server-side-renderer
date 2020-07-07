@@ -19,7 +19,7 @@ export class WeatherApp extends LitElement {
   }
 
   async firstUpdated() {
-    await fetch(`https://api.openweathermap.org/data/2.5/weather?id=${this.weatherToken}&units=metric`)
+    await fetch(`https://api.openweathermap.org/data/2.5/onecall?lon=-3.87&lat=40.49&APPID=${this.weatherToken}&units=metric`)
         .then(r => r.json())
         .then(async data => {
           this.weather = data;

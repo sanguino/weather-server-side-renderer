@@ -76,48 +76,50 @@ export class WeatherLayout extends LitElement {
   }
 
   get renderWeather() {
+    const forecast = this.weather.hourly[new Date(this.weather.current.dt + '000').getMinutes() > 30 ? 2 : 1];
+    console.log(this.weather.daily[0])
     return html `
       <weather-icon 
         class="weather-icon"
-        weatherId="${this.weather.weather[0].id}" 
-        itsDay="${this.weather.dt > this.weather.sys.sunrise && this.weather.dt < this.weather.sys.sunset}">
+        weatherId="${forecast.weather[0].id}" 
+        itsDay="${forecast.dt > this.weather.current.sunrise && forecast.dt < this.weather.current.sunset}">
       </weather-icon>
   
       <time-comp
           class="sunrise"
-          value="${this.weather.sys.sunrise}"
+          value="${this.weather.current.sunrise}"
           icon="sunrise"
           align="center">
       </time-comp>
       <time-comp
           class="sunset"
-          value="${this.weather.sys.sunset}"
+          value="${this.weather.current.sunset}"
           icon="sunset"
           align="center">
         </time-comp>
         
       <number-comp 
         class="temp-out"
-        value="${this.weather.main.temp}" 
+        value="${this.weather.current.temp}" 
         size="big">
       </number-comp>
       
         <number-comp 
           class="temp-max"
-          value="${this.weather.main.temp_max}" 
+          value="${this.weather.daily[0].temp.max}" 
           size="medium"
           icon="temp-max">
         </number-comp>
         <number-comp 
           class="temp-min"
-          value="${this.weather.main.temp_min}" 
+          value="${this.weather.daily[0].temp.min}" 
           size="medium"
           icon="temp-min">
         </number-comp>
  
       <number-comp 
         class="hum-out"
-        value="${this.weather.main.humidity}" 
+        value="${this.weather.current.humidity}" 
         size="medium"
         icon="hum-out"
         iconSize="big">
@@ -125,8 +127,8 @@ export class WeatherLayout extends LitElement {
  
       <wind-comp
         class="wind"
-        velocity="${this.weather.wind.speed}"
-        angle="${this.weather.wind.deg}">
+        velocity="${this.weather.current.wind_speed}"
+        angle="${this.weather.current.wind_deg}">
       </wind-comp>
     `;
   }
