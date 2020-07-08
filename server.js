@@ -26,7 +26,7 @@ function calculatePixels(screenshot) {
                 }
             }
             return resolve({
-                data: pixelsData,
+                data: pixelsData.toString(),
                 width: png.width,
                 height: png.height,
             })
